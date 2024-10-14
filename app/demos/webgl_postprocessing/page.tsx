@@ -9,7 +9,6 @@ import {ShaderPass} from "three/examples/jsm/postprocessing/ShaderPass";
 import {RGBShiftShader} from "three/examples/jsm/shaders/RGBShiftShader";
 import {DotScreenShader} from "three/examples/jsm/shaders/DotScreenShader";
 import {OutputPass} from "three/examples/jsm/postprocessing/OutputPass";
-import {Object3D} from "three";
 
 export default function WebglPostProcessingPage() {
     let canvasDom: HTMLElement | null = null
@@ -53,7 +52,7 @@ function initAll(dom:HTMLElement){
     renderer.setAnimationLoop(animation)
     window.addEventListener("resize", resize)
 
-    let controls = new OrbitControls(camera, renderer.domElement)
+    const controls = new OrbitControls(camera, renderer.domElement)
 
     const options = {
         axesHelperVisible:false,
@@ -78,7 +77,6 @@ function initAll(dom:HTMLElement){
 
     const fog = new THREE.Fog(options.fogColor, options.near, options.far)
     scene.fog = fog
-
 
     object = new THREE.Object3D()
     scene.add(object)
