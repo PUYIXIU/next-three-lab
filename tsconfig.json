@@ -18,7 +18,14 @@
       }
     ],
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "three/examples/jsm/postprocessing/EffectComposer": ["./node_modules/@types/three/examples/jsm/postprocessing/EffectComposer"],
+      "three/examples/jsm/postprocessing/RenderPass": ["./node_modules/@types/three/examples/jsm/postprocessing/RenderPass"],
+      "three/examples/jsm/postprocessing/ShaderPass": ["./node_modules/@types/three/examples/jsm/postprocessing/ShaderPass"],
+      "three/examples/jsm/shaders/RGBShiftShader": ["./node_modules/@types/three/examples/jsm/shaders/RGBShiftShader"],
+      "three/examples/jsm/shaders/DotScreenShader": ["./node_modules/@types/three/examples/jsm/shaders/DotScreenShader"],
+      "three/examples/jsm/postprocessing/OutputPass": ["./node_modules/@types/three/examples/jsm/postprocessing/OutputPass"],
+      "three/examples/jsm/controls/OrbitControls": ["./node_modules/@types/three/examples/jsm/controls/OrbitControls"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
