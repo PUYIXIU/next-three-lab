@@ -18,6 +18,11 @@ export default function WebglPostProcessingPage() {
         if(canvasDom){
             initAll(canvasDom)
         }
+        return ()=>{
+            if(gui){
+                gui.destroy()
+            }
+        }
     },[])
 
     return (
@@ -32,6 +37,7 @@ let camera:any
 let renderer:any
 let object:any
 let composer:any
+let gui:any
 let speed = 1
 function initAll(dom:HTMLElement){
     scene = new THREE.Scene()
@@ -61,7 +67,7 @@ function initAll(dom:HTMLElement){
         far:1000,
         near:1
     }
-    const gui = new GUI()
+    gui = new GUI()
     gui.add(options,'axesHelperVisible').onChange(e=>{
         axesHelper.visible = e
     })
