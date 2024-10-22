@@ -26,6 +26,8 @@
       "three/examples/jsm/shaders/DotScreenShader": ["./node_modules/@types/three/examples/jsm/shaders/DotScreenShader"],
       "three/examples/jsm/postprocessing/OutputPass": ["./node_modules/@types/three/examples/jsm/postprocessing/OutputPass"],
       "three/examples/jsm/controls/OrbitControls": ["./node_modules/@types/three/examples/jsm/controls/OrbitControls"],
+      "three/examples/jsm/loaders/PCDLoader": ["./node_modules/@types/three/examples/jsm/loaders/PCDLoader"],
+      "three/examples/jsm/postprocessing/UnrealBloomPass": ["./node_modules/@types/three/examples/jsm/postprocessing/UnrealBloomPass"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

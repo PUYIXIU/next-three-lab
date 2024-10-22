@@ -11,9 +11,6 @@ import {ShaderPass} from "three/examples/jsm/postprocessing/ShaderPass";
 import {RGBShiftShader} from "three/examples/jsm/shaders/RGBShiftShader";
 import {DotScreenShader} from "three/examples/jsm/shaders/DotScreenShader";
 import {OutputPass} from "three/examples/jsm/postprocessing/OutputPass";
-
-
-
 import {useGSAP} from "@gsap/react";
 import {gsap} from "gsap";
 gsap.registerPlugin(useGSAP)
@@ -37,7 +34,7 @@ export default function PostprocessingCreateTypingComp() {
 
             // 右侧动图
             gsap.fromTo('.content-wrapper',
-                {xPercent:150},
+                {xPercent:300},
                 {xPercent:0,duration:1,delay:1,ease:'power1.out'})
 
 

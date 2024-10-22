@@ -8,6 +8,7 @@ const WebGlMultipleElementsComp = dynamic(
 
 export default function WebGlMultipleElementsPage() {
     return <>
+        <title>材质比较表</title>
         <WebGlMultipleElementsComp/>
     </>
 }

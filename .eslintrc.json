@@ -3,6 +3,8 @@
   "rules": {
     "@typescript-eslint/no-explicit-any": ["off"],
     "react/no-unescaped-entities": "off",
-    "@next/next/no-page-custom-font": "off"
+    "@next/next/no-page-custom-font": "off",
+    // 关闭对this进行局部别名的报错检测
+    "@typescript-eslint/no-this-alias": ["off"]
   }
 }
