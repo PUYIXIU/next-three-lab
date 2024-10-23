@@ -2,7 +2,7 @@
 import styles from './custom_dot_cursor.module.scss'
 import {useEffect, useState} from "react";
 import Lottie from "lottie-react";
-
+import dayjs from "dayjs";
 import Animation_LoopingBack from '@/assets/Animation/Animation_LoopingBack.json'
 import Animation_CubeLooping from '@/assets/Animation/Animation_CubeLooping.json'
 import Animation_3D_trangle from '@/assets/Animation/Animation_3D_trangle.json'
@@ -17,12 +17,18 @@ import {PCDLoader} from "three/examples/jsm/loaders/PCDLoader";
 
 function resize(){
     const bg = document.getElementById("canvas-bg") as HTMLDivElement;
+    const svg = bg.children[0] as HTMLDivElement;
+    const gridBackDoms = document.querySelectorAll('.grid-back');
     const radio = window.innerHeight / window.innerWidth;
     if(radio > 1){
         // 纵向图片
         bg.style.width = `${120 + (radio - 1)*100}%`
+        svg.style.transform = "rotate(90deg)"
+        gridBackDoms.forEach((dom:any)=>dom.style.transform = "rotate(90deg)")
     }else{
         bg.style.width = '120%'
+        svg.style.transform = "rotate(0deg)"
+        gridBackDoms.forEach((dom:any)=>dom.style.transform = "rotate(0deg)")
     }
 }
 interface ConfettiVO {
@@ -220,7 +226,8 @@ export default function CustomDotCursorComp(){
                     <a href="#"
                        className={`${styles['btn-item']} ${styles['code-btn']} ${codeDialogActive ? styles['active'] : ''} ${modelDialogActive ? styles['disabled'] : ''} `}
                        onClick={() => {
-                           if (!modelDialogActive) setCodeDialogActive(!codeDialogActive);
+                           if(modelDialogActive)  setModelDialogActive(!modelDialogActive);
+                           setCodeDialogActive(!codeDialogActive);
                        }}>
                         <img src={codeIcon.src} alt=""/>
                         <img src={closeIcon.src} alt=""/>
@@ -228,14 +235,15 @@ export default function CustomDotCursorComp(){
                     <a href="#"
                        className={`${styles['btn-item']} ${styles['human-head-btn']} ${modelDialogActive ? styles['active'] : ''}  ${codeDialogActive ? styles['disabled'] : ''} `}
                        onClick={() => {
-                           if (!codeDialogActive) setModelDialogActive(!modelDialogActive);
+                           if (codeDialogActive) setCodeDialogActive(!codeDialogActive);
+                           setModelDialogActive(!modelDialogActive);
                        }}>
                         <img src={model_outlined.src} alt=""/>
                         <img src={closeIcon.src} alt=""/>
                     </a>
                 </div>
                 <div className={`${styles['dialog-wrapper']} ${codeDialogActive ? styles['show'] : styles['hidden']}`}>
-                    <Lottie animationData={Animation_grid_flow_back} className={styles['model-back']}></Lottie>
+                    <Lottie animationData={Animation_grid_flow_back} className={`${styles['model-back']} grid-back`}></Lottie>
                     <div className={styles['dialog-content']}>
                         <h1 className={styles['dialog-title']}>
                             <Lottie className={styles['dialog-logo']} animationData={Animation_3D_trangle}></Lottie>
@@ -277,7 +285,7 @@ export default function CustomDotCursorComp(){
                     </div>
                 </div>
                 <div className={`${styles['model-dialog-wrapper']} ${modelDialogActive ? styles['show'] : styles['hidden']}`}>
-                    <Lottie animationData={Animation_grid_flow_back} className={styles['model-back']}></Lottie>
+                    <Lottie animationData={Animation_grid_flow_back} className={`${styles['model-back']} grid-back`}></Lottie>
                     <HeadModel/>
                 </div>
             </div>
@@ -290,7 +298,9 @@ export default function CustomDotCursorComp(){
  * @constructor
  */
 let scene:any, camera:any, renderer:any, model:any;
+
 export function HeadModel(){
+    const [modelRotate, setModelRotate] = useState([0,0,0])
     function init(){
         scene = new THREE.Scene()
         camera = new THREE.PerspectiveCamera(
@@ -304,7 +314,8 @@ export function HeadModel(){
 
         const pointLight = new THREE.PointLight( 0xffffff, 100 );
         camera.add( pointLight );
-        camera.position.z = 0.7
+        camera.position.z = 0.9
+        camera.position.y = -0.1
         camera.lookAt(0,0,0)
         renderer = new THREE.WebGLRenderer({antialias:true})
         renderer.setSize(window.innerWidth, window.innerHeight);
@@ -319,7 +330,6 @@ export function HeadModel(){
 
         const loader = new PCDLoader()
         loader.load("/models/pcd/Zaghetto.pcd",function(points){
-            console.log(points)
             points.geometry.center()
             points.geometry.rotateX(Math.PI)
             points.material.size = 0.001
@@ -336,7 +346,10 @@ export function HeadModel(){
         renderer.setSize(window.innerWidth, window.innerHeight)
     }
     function animate(){
-        if (model) model.rotation.y+=0.003
+        if (model){
+            model.rotation.y+=0.003
+            setModelRotate([model.rotation.x, model.rotation.y, model.rotation.z])
+        }
         renderer.render(scene, camera)
     }
     useEffect(()=>{
@@ -346,6 +359,108 @@ export function HeadModel(){
         }
     },[])
     return (
-        <div id="model-canvas" className={styles['model-canvas']}></div>
+        <>
+            <div className={styles["kanban-container"]}>
+                <DataKanban modelData={modelRotate} />
+            </div>
+            <div id="model-canvas" className={styles['model-canvas']}></div>
+        </>
+    )
+}
+
+/**
+ * 数据看板
+ * @constructor
+ */
+const formatString = "YYYY/MM/DD HH:mm:ss.SSS"
+export function DataKanban({modelData}:{modelData:any}){
+    const [currentTime, setCurrentTime] = useState(dayjs().format(formatString))
+    const [randomStr, setRandomStr] = useState('')
+    useEffect(()=>{
+       const timer = setInterval(()=>{
+           setCurrentTime(dayjs().format(formatString))
+       },1)
+        const strTimer = setInterval(()=>{
+            let initStr = ""
+            for(let i = 0; i< 20 ; i++){
+                const code = Math.random()*100
+                initStr += String.fromCharCode(code)
+            }
+            setRandomStr(initStr)
+        },50)
+       return ()=>{
+           clearInterval(timer)
+           clearInterval(strTimer)
+       }
+    },[])
+    return (
+        <div className={styles['data-kanban']}>
+            <p className={styles['data-time']}>{currentTime}</p>
+            <div className={styles['data-key-value']}>
+                <p className={styles['data-key']}>username :</p>
+                <TypingEffect text={"administer"}/>
+            </div>
+            <div className={styles['data-key-value']}>
+                <p className={styles['data-key']}>identity :</p>
+                <p className={styles['data-value']}>{randomStr}</p>
+            </div>
+            <div className={styles['data-key-value']}>
+                <p className={styles['data-key']}>loc_X :</p>
+                <p className={styles['data-value']}>{modelData[0]}</p>
+            </div>
+            <div className={styles['data-key-value']}>
+                <p className={styles['data-key']}>loc_Y</p>
+                <p className={styles['data-value']}>{modelData[1]}</p>
+            </div>
+            <div className={styles['data-key-value']}>
+                <p className={styles['data-key']}>loc_Z</p>
+                <p className={styles['data-value']}>{modelData[2]}</p>
+            </div>
+        </div>
+    )
+}
+
+/**
+ * 打字效果处理器
+ * @constructor
+ */
+export function TypingEffect({text}:{text:any}) {
+    let currentIndex = 0
+    let timer: string | number | NodeJS.Timeout | undefined
+    // 要显示的文字
+    const [showText, setShowText] = useState("")
+    function typing(){
+        if(currentIndex >= text.length){
+            clearInterval(timer as any)
+            setTimeout(()=>{
+                timer = setInterval(deleting, 70)
+            },3000)
+            return
+        }
+        currentIndex ++
+        setShowText(text.slice(0, currentIndex))
+    }
+    function deleting(){
+        if(currentIndex<=0){
+            clearInterval(timer)
+            timer = setInterval(typing, 150)
+            return
+        }
+        currentIndex--
+        setShowText(text.slice(0, currentIndex))
+    }
+    useEffect(()=>{
+        if(text.length>0){
+            timer = setInterval(typing, 150)
+        }
+        return ()=>{
+            clearTimeout(timer)
+        }
+    },[])
+    return (
+        <p className={`${styles["typing-box"]} ${styles['data-value']}`}>
+            <span>{showText}</span>
+            <span className={styles["cursor"]}>|</span>
+        </p>
     )
 }
