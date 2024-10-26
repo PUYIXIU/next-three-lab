@@ -13,6 +13,7 @@ export default function Home() {
                       特效背景+lottie</Link></li>
                   <li><Link href='/demos/lottie_interact_test'>lottie_interact_test lottie交互效果测试</Link></li>
                   <li><Link href='/demos/custom_dot_cursor'>custom_dot_cursor 自定义鼠标效果</Link></li>
+                  <li><Link href='/demos/custom_cursor_switch'>custom_cursor_switch 自定义鼠标效果2.0</Link></li>
               </ul>
           </div>
       </>

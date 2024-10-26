@@ -197,6 +197,7 @@ export default function CustomDotCursorComp(){
         cursor.init()
         resize()
         window.addEventListener('resize', resize)
+        document.addEventListener('touchmove', e=>e.preventDefault(), false)
     },[])
 
     return (
@@ -406,15 +407,19 @@ export function DataKanban({modelData}:{modelData:any}){
             </div>
             <div className={styles['data-key-value']}>
                 <p className={styles['data-key']}>loc_X :</p>
-                <p className={styles['data-value']}>{modelData[0]}</p>
+                <p className={styles['data-value']}>{modelData[0]}°</p>
             </div>
             <div className={styles['data-key-value']}>
                 <p className={styles['data-key']}>loc_Y</p>
-                <p className={styles['data-value']}>{modelData[1]}</p>
+                <p className={styles['data-value']}>{modelData[1]}°</p>
             </div>
             <div className={styles['data-key-value']}>
                 <p className={styles['data-key']}>loc_Z</p>
-                <p className={styles['data-value']}>{modelData[2]}</p>
+                <p className={styles['data-value']}>{modelData[2]}°</p>
+            </div>
+            <div className={styles['data-key-value']}>
+                <p className={styles['data-key']}>password :</p>
+                <TypingEffect text={"The things you own end up owning you."}/>
             </div>
         </div>
     )
@@ -424,7 +429,7 @@ export function DataKanban({modelData}:{modelData:any}){
  * 打字效果处理器
  * @constructor
  */
-export function TypingEffect({text}:{text:any}) {
+export function TypingEffect({text, delay = 0}: { text: any, delay?: number }) {
     let currentIndex = 0
     let timer: string | number | NodeJS.Timeout | undefined
     // 要显示的文字
@@ -451,7 +456,7 @@ export function TypingEffect({text}:{text:any}) {
     }
     useEffect(()=>{
         if(text.length>0){
-            timer = setInterval(typing, 150)
+            setTimeout(()=> timer = setInterval(typing, 150), delay)
         }
         return ()=>{
             clearTimeout(timer)
@@ -460,7 +465,7 @@ export function TypingEffect({text}:{text:any}) {
     return (
         <p className={`${styles["typing-box"]} ${styles['data-value']}`}>
             <span>{showText}</span>
-            <span className={styles["cursor"]}>|</span>
+            <span className={styles["input-cursor"]}>|</span>
         </p>
     )
 }
