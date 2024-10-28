@@ -1,6 +1,6 @@
 "use client"
 import styles from './custom_dot_cursor.module.scss'
-import {useEffect, useState} from "react";
+import {useEffect, useState, useMemo} from "react";
 import Lottie from "lottie-react";
 import dayjs from "dayjs";
 import Animation_LoopingBack from '@/assets/Animation/Animation_LoopingBack.json'
@@ -11,6 +11,8 @@ import Animation_grid_flow_back from "@/assets/Animation/Animation_grid_flow_bac
 import codeIcon from '@/assets/icon/code.svg'
 import closeIcon from '@/assets/icon/close.svg'
 import model_outlined from '@/assets/icon/model-outlined.svg'
+import fullscreenIcon from '@/assets/icon/fullscreen.svg'
+import exitFullScreenIcon from '@/assets/icon/exit-fullscreen.svg'
 import * as THREE from 'three'
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 import {PCDLoader} from "three/examples/jsm/loaders/PCDLoader";
@@ -53,6 +55,8 @@ export default function CustomDotCursorComp(){
     const [modelDialogActive, setModelDialogActive] = useState(false)
     // reference弹窗
     const [codeDialogActive, setCodeDialogActive] = useState(false)
+    // 是否全屏
+    const [fullscreen, setFullScreen] = useState(false)
     /**
      * 鼠标点击，新增效果
      */
@@ -198,6 +202,12 @@ export default function CustomDotCursorComp(){
         resize()
         window.addEventListener('resize', resize)
         document.addEventListener('touchmove', e=>e.preventDefault(), false)
+        window.addEventListener('keydown',e=>{
+            if(e.key == "F11"){
+                // setFullScreen(true)
+                e.preventDefault()
+            }
+        })
     },[])
 
     return (
@@ -227,7 +237,7 @@ export default function CustomDotCursorComp(){
                     <a href="#"
                        className={`${styles['btn-item']} ${styles['code-btn']} ${codeDialogActive ? styles['active'] : ''} ${modelDialogActive ? styles['disabled'] : ''} `}
                        onClick={() => {
-                           if(modelDialogActive)  setModelDialogActive(!modelDialogActive);
+                           if (modelDialogActive) setModelDialogActive(!modelDialogActive);
                            setCodeDialogActive(!codeDialogActive);
                        }}>
                         <img src={codeIcon.src} alt=""/>
@@ -242,9 +252,24 @@ export default function CustomDotCursorComp(){
                         <img src={model_outlined.src} alt=""/>
                         <img src={closeIcon.src} alt=""/>
                     </a>
+                    <a href="#"
+                       className={`${styles['btn-item']} ${styles['human-head-btn']} ${fullscreen ? styles['active'] : ''} ${fullscreen ? styles['disabled'] : ''} `}
+                       onClick={() => {
+                           if(!fullscreen){
+                               document.body.requestFullscreen()
+                               setFullScreen(true)
+                           }else{
+                               document.exitFullscreen()
+                               setFullScreen(false)
+                           }
+                       }}>
+                        <img src={fullscreenIcon.src} alt=""/>
+                        <img src={exitFullScreenIcon.src} alt=""/>
+                    </a>
                 </div>
                 <div className={`${styles['dialog-wrapper']} ${codeDialogActive ? styles['show'] : styles['hidden']}`}>
-                    <Lottie animationData={Animation_grid_flow_back} className={`${styles['model-back']} grid-back`}></Lottie>
+                    <Lottie animationData={Animation_grid_flow_back}
+                            className={`${styles['model-back']} grid-back`}></Lottie>
                     <div className={styles['dialog-content']}>
                         <h1 className={styles['dialog-title']}>
                             <Lottie className={styles['dialog-logo']} animationData={Animation_3D_trangle}></Lottie>
