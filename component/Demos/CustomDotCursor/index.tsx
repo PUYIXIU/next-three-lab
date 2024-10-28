@@ -1,6 +1,6 @@
 "use client"
 import styles from './custom_dot_cursor.module.scss'
-import {useEffect, useState, useMemo} from "react";
+import {useEffect, useState} from "react";
 import Lottie from "lottie-react";
 import dayjs from "dayjs";
 import Animation_LoopingBack from '@/assets/Animation/Animation_LoopingBack.json'
