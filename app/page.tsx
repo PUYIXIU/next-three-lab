@@ -15,9 +15,9 @@ export default function Home() {
                   <li><Link href='/demos/custom_dot_cursor'>custom_dot_cursor 自定义鼠标效果</Link></li>
                   <li><Link href='/demos/custom_cursor_switch'>custom_cursor_switch 自定义鼠标效果2.0</Link></li>
               </ul>
-              <ul style={{paddingTop: '20px'}}>
-                  <li><Link href='/reference/curzr_cursor'>curzr_cursor curzr自定义光标效果</Link></li>
-              </ul>
+              {/*<ul style={{paddingTop: '20px'}}>*/}
+              {/*    <li><Link href='/reference/curzr_cursor'>curzr_cursor curzr自定义光标效果</Link></li>*/}
+              {/*</ul>*/}
           </div>
       </>
   );

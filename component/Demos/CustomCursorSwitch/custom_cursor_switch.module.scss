@@ -10,10 +10,13 @@
   --cursor-1-bg: #606c38;
   --cursor-2-bg: #fefae0;
   --cursor-3-bg: #1c0816;
-  --cursor-4-bg: #bc6c25;
+  --cursor-4-bg: #fff4bc;
+  --cursor-5-bg: #f6be8b;
+  --cursor-6-bg: #bc6c25;
 
   --cursor-1-bg-line: rgba(141, 157, 88, 1);
-  --cursor-4-bg-line: #c98c4a;
+  --cursor-6-bg-line: #c98c4a;
+  --cursor-4-bg-line: #dcd3e1;
 
   --cursor-text-color-dark: #474747;
   --cursor-text-color-light: #ffffff;
@@ -26,13 +29,18 @@
 @media screen and (max-width:750px){
   .canvas-body{
     grid-template-columns: 100vw !important;
-    grid-template-rows: 50vh 50vh 50vh 50vh !important;
+    grid-template-rows: 50vh 50vh 50vh 50vh 50vh 50vh !important;
   }
 }
-
+@media screen and (min-width:750px) and (max-width: 1350px){
+  .canvas-body{
+    grid-template-columns: 50vw 50vw !important;
+    grid-template-rows: 50vh 50vh 50vh !important;
+  }
+}
 .canvas-body{
   display: grid;
-  grid-template-columns: 50vw 50vw;
+  grid-template-columns: 33.3333vw 33.3333vw 33.3333vw;
   grid-template-rows: 50vh 50vh;
 }
 .catcher-wrapper{
@@ -42,6 +50,7 @@
   font-size: 20px;
   font-weight:bold;
   font-family: "Playwrite GB S", serif;
+  cursor:none;
   &:nth-child(1){
     background-image:
             linear-gradient(var(--cursor-1-bg-line) 1px, transparent 1px),
@@ -60,13 +69,22 @@
       2px 2px 2px #e11d51;
   }
   &:nth-child(4){
-    color:var(--cursor-text-color-light);
+    color:var(--cursor-text-color-dark);
     background-color:var(--cursor-4-bg);
-    background-image:
-            linear-gradient(to right, var(--cursor-4-bg-line) 1px, transparent 1px),
-            linear-gradient(var(--cursor-4-bg-line) 1px, var(--cursor-4-bg) 1px);
+
   }
 
+  &:nth-child(5){
+    color:var(--cursor-text-color-light);
+    background-color:var(--cursor-5-bg);
+  }
+  &:nth-child(6){
+    color:var(--cursor-text-color-light);
+    background-color:var(--cursor-6-bg);
+    background-image:
+            linear-gradient(to right, var(--cursor-6-bg-line) 1px, transparent 1px),
+            linear-gradient(var(--cursor-6-bg-line) 1px, var(--cursor-6-bg) 1px);
+  }
   .catcher-content{
     width:100%;
     height:100%;
@@ -75,7 +93,7 @@
     align-items: center;
 
     a{
-      cursor:none
+      cursor:none;
       //pointer-events: none;
     }
   }
