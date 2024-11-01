@@ -9,7 +9,6 @@ import {MotionBlur} from "@/utils/cursor/MotionBlur";
 import {GlitchEffect} from "@/utils/cursor/GlitchEffect";
 import {CircleAndDot} from "@/utils/cursor/CircleAndDot";
 import {RingDot} from "@/utils/cursor/RingDot";
-import {BigCircle} from "@/utils/cursor/BigCircle";
 
 export default function CustomCursorSwitch(){
     return (
