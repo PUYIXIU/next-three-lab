@@ -29,7 +29,10 @@ export default function HomeBox(){
                 <ul className={`${styles['list-body']} ${styles['list-project']}`}>
                     <li className={styles['list-title']}>Reference</li>
                     <li className={styles['list-item']}><Link href='/reference/webgl_effect_stereo'>webgl_effect_stereo threejs StereoEffect</Link></li>
+                    <li className={styles['list-item']}><Link href='/reference/jiejoe/poke'>jiejoe/poke JIEJOE 如何做一个扑克牌轮播图</Link></li>
+                    <li className={styles['list-item']}><Link href='/reference/jiejoe/glitch'>jiejoe/glitch JIEJOE 文字故障效果</Link></li>
                 </ul>
+
             </div>
         </div>
     )
