@@ -1,0 +1,33 @@
+.wrapper{
+  width:100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+}
+
+img{
+  width:40rem;
+  margin-bottom:5rem;
+  pointer-events: none;
+  user-select: none;
+}
+
+.scrollbox{
+  position:relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width:100%;
+  flex-shrink: 0;
+  transition: 0.15s ease;
+}
+
+.viewbox{
+  position: fixed;
+  top: 0;
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  height: 100vh;
+}

@@ -26,13 +26,13 @@ const faultText:{
     fault(){
         setTimeout(()=>{
             clearInterval(this.player)
-            this.texts.forEach(text=>{
+            this.texts.forEach((text:any)=>{
                 text.style.transform = ''
                 text.style.clipPath = ''
             })
         }, 1000)
         this.player = setInterval(()=>{
-            this.texts.forEach((text:Element)=>{
+            this.texts.forEach((text:any)=>{
                 text.classList.add('faulttext_fault')
                 text.style.transform = `translate(${30*(0.5 - Math.random())}%,${30*(0.5-Math.random())}%)`
                 const left = Math.random() * 100
